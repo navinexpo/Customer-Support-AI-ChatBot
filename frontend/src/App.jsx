@@ -100,7 +100,7 @@ function App() {
 
     } catch (error) {
       console.error(error);
-      const errorMessage = { text: "Unable to sync with processing nodes right now.", sender: 'bot', time: 'OFFLINE' };
+      const errorMessage = { text: "Unable to sync with processing nodes right now. Please try again later.", sender: 'bot', time: 'OFFLINE' };
       setConversations(prev => prev.map(chat => {
         if (chat.id === activeSessionId) {
           return { ...chat, messages: [...chat.messages, errorMessage] };
