@@ -422,7 +422,7 @@ function App() {
               {authTab === 'login' ? (
                 <span>Don't have an account? <span style={styles.footerLinkAction} onClick={() => setAuthTab('register')}>Register here</span></span>
               ) : (
-                <span>Already have an account? <span style={styles.footerLinkAction} onClick={() => setAuthTab('login')}>Log In here</span></span>
+                <span>Already have an account ? <span style={styles.footerLinkAction} onClick={() => setAuthTab('login')}>Log In here</span></span>
               )}
             </div>
 
