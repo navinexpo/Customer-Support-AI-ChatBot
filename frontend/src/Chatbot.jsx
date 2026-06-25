@@ -55,7 +55,7 @@ export default function Chatbot() {
         ...prev,
         {
           text:
-            "Unable to connect to AI service. Please try again later.",
+            "Unable to connect to AI services. Please try again later.",
           sender: "bot",
         },
       ]);
