@@ -354,7 +354,7 @@ function App() {
             </div>
 
             <p style={styles.modalSubheadingText}>
-              {authTab === 'login' ? "Welcome back! Enter your details to continue dashboard workflows." : "Create your free account today to track secure prompt feeds."}
+              {authTab === 'login' ? "Welcome back! Please enter your details to continue dashboard workflows." : "Create your free account today to track secure prompt feeds."}
             </p>
             
             <form onSubmit={handleAuthSubmit} style={styles.modalFormLayout}>
