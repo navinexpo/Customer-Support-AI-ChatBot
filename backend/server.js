@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { initChroma } from "./chromaClient.js";
@@ -98,8 +98,8 @@ app.post('/api/query-support', async (req, res) => {
 app.post('/api/chat', async (req, res) => {
     try {
         const { message } = req.body;
-
-        if (!message) {
+       console.log(`Incoming user message: "${message}"`);
+        if (!message) { 
             return res.status(400).json({ error: "Message is required" });
         }
 
@@ -132,9 +132,11 @@ app.post('/api/chat', async (req, res) => {
 
         // Extract the clean message text string 
         const aiResponse = data.choices[0]?.message?.content || "No response generated.";
-
+      console.log(`Groq AI Answered: "${aiResponse.substring(0, 50)}..."`);
         // Send it directly to your React App
-        res.json({ reply: aiResponse });
+        res.json({ response: aiResponse,
+            reply: aiResponse
+         });
 
     } catch (error) {
         console.error("System Error details:", error);
