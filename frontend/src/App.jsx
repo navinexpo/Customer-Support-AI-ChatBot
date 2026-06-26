@@ -75,6 +75,7 @@ function App() {
     return chat;
   }));
 
+    //   In Future: You can add a feature to save the conversation to a database or local storage here.
   try {
     const reply = await fetch('http://localhost:5001/api/chat', { 
       method: 'POST',
