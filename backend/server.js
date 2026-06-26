@@ -144,6 +144,6 @@ app.post('/api/chat', async (req, res) => {
     }
 });
 
-// Only one listen call is needed using the PORT from environment variables or defaulting to 5001
+// Only one listen call is needed using the PORT from environment variables to 5001
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running smoothly on port ${PORT}`));
