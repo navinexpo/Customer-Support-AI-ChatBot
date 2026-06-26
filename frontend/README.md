@@ -241,3 +241,16 @@ Node.js, ChromaDB, and Groq Llama. It follows the Retrieval-Augmented
 Generation approach, where relevant documents are retrieved from a
 vector database and supplied to the LLM to generate accurate,
 context-aware responses."
+
+
+## How to Run the Project
+
+### Backend
+1. Navigate to backend: `cd backend`
+2. Install dependencies: `npm install`
+3. Start server: `npm start`
+
+### Frontend
+1. Navigate to frontend: `cd frontend`
+2. Install dependencies: `npm install`
+3. Start dev server: `npm run dev`
