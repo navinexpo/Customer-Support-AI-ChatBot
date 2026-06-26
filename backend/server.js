@@ -1,9 +1,12 @@
-import 'dotenv/config';
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { initChroma } from "./chromaClient.js";
+import Groq from 'groq-sdk';
+import 'dotenv/config'
 import OpenAI from "openai";
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 dotenv.config();
 
@@ -86,6 +89,59 @@ app.post('/api/query-support', async (req, res) => {
     }
 });
 
+// 1. Make sure you import/require the correct SDK at the top of server.js
+
+// Initialize Groq with your environment variable key
+
+
+// 2. Update your chat endpoint route
+app.post('/api/chat', async (req, res) => {
+    try {
+        const { message } = req.body;
+
+        if (!message) {
+            return res.status(400).json({ error: "Message is required" });
+        }
+
+        // Send a direct HTTP POST request straight to Groq's API
+        const groqResponse = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+            model: "llama-3.3-70b-versatile", 
+                messages: [
+                    {
+                        role: "user",
+                        content: message
+                    }
+                ]
+            })
+        });
+
+        // Parse the incoming data stream from Groq
+        const data = await groqResponse.json();
+
+        // Check if Groq sent back an API error (like invalid key)
+        if (data.error) {
+            console.error("Groq API Cloud Error:", data.error);
+            return res.status(500).json({ error: data.error.message });
+        }
+
+        // Extract the clean message text string 
+        const aiResponse = data.choices[0]?.message?.content || "No response generated.";
+
+        // Send it directly to your React App
+        res.json({ reply: aiResponse });
+
+    } catch (error) {
+        console.error("System Error details:", error);
+        res.status(500).json({ error: "Internal Server Error", details: error.message });
+    }
+});
+
 // Only one listen call is needed
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => console.log(`Server running smoothly on port ${PORT}`));

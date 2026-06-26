@@ -53,64 +53,69 @@ function App() {
 
   // Action Handler: Dispatch message to backend
   const handleSendMessage = async (e) => {
-    e.preventDefault();
-    if (!inputMessage.trim()) return;
+  e.preventDefault();
+  if (!inputMessage.trim()) return;
 
-    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const userMessage = { text: inputMessage, sender: 'user', time: currentTime };
-    
-    let updatedTitle = currentConversation.title;
-    if (currentConversation.messages.length <= 1) {
-      updatedTitle = inputMessage.length > 22 ? inputMessage.substring(0, 20) + "..." : inputMessage;
+  const currentPrompt = inputMessage.trim();
+  const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const userMessage = { text: currentPrompt, sender: 'user', time: currentTime };
+  
+  let updatedTitle = currentConversation.title;
+  if (currentConversation.messages.length <= 1) {
+    updatedTitle = currentPrompt.length > 22 ? currentPrompt.substring(0, 20) + "..." : currentPrompt;
+  }
+
+  setInputMessage("");
+  setLoading(true);
+
+  setConversations(prev => prev.map(chat => {
+    if (chat.id === activeSessionId) {
+      return { ...chat, title: updatedTitle, messages: [...chat.messages, userMessage] };
     }
+    return chat;
+  }));
+
+  try {
+    const reply = await fetch('http://localhost:5001/api/chat', { 
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: currentPrompt }), 
+    });
+
+    if (!reply.ok) throw new Error("Server disconnected");
+    const data = await reply.json();
+    
+    // FIXED: Changed data.reply to data.response to read the backend object correctly
+    const botMessage = { 
+      text: data.response || "No response received from model endpoint.", 
+      sender: 'bot',
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
 
     setConversations(prev => prev.map(chat => {
       if (chat.id === activeSessionId) {
-        return { ...chat, title: updatedTitle, messages: [...chat.messages, userMessage] };
+        return { ...chat, messages: [...chat.messages, botMessage] };
       }
       return chat;
     }));
 
-    const promptCache = inputMessage;
-    setInputMessage("");
-    setLoading(true);
-
-    try {
-      const response = await fetch('${import.meta.env.VITE_API_URL}' || 'http://localhost:5000/api/query-support', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: promptCache }),
-      });
-
-      if (!response.ok) throw new Error("Server disconnected");
-      const data = await response.json();
-      
-      const botMessage = { 
-        text: data.reply || "Processed successfully. Let me know if you need deeper data mapping.", 
-        sender: 'bot',
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      };
-
-      setConversations(prev => prev.map(chat => {
-        if (chat.id === activeSessionId) {
-          return { ...chat, messages: [...chat.messages, botMessage] };
-        }
-        return chat;
-      }));
-
-    } catch (error) {
-      console.error(error);
-      const errorMessage = { text: "Unable to sync with processing nodes right now. Please try again later.", sender: 'bot', time: 'OFFLINE' };
-      setConversations(prev => prev.map(chat => {
-        if (chat.id === activeSessionId) {
-          return { ...chat, messages: [...chat.messages, errorMessage] };
-        }
-        return chat;
-      }));
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (error) {
+    console.error(error);
+    const errorMessage = { 
+      text: "Unable to sync with processing nodes right now. Please try again later.", 
+      sender: 'bot', 
+      time: 'OFFLINE' 
+    };
+    setConversations(prev => prev.map(chat => {
+      if (chat.id === activeSessionId) {
+        return { ...chat, messages: [...chat.messages, errorMessage] };
+      }
+      return chat;
+    }));
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Modern Unified Auth Form Submission Handler
   const handleAuthSubmit = (e) => {
