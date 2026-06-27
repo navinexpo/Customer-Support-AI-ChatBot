@@ -90,7 +90,7 @@ app.post('/api/query-support', async (req, res) => {
     }
 });
 
-// 2. Update your chat endpoint route
+// 3. Update your chat endpoint route
 app.post('/api/chat', async (req, res) => {
     try {
         const { message } = req.body;
