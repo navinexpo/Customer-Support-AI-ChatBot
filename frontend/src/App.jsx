@@ -118,7 +118,7 @@ function App() {
   }
 };
 
-  // Modern Unified Auth Form Submission Handler
+  // Modern Unified Auth Form Submission  Handler
   const handleAuthSubmit = (e) => {
     e.preventDefault();
     
