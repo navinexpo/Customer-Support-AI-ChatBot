@@ -90,11 +90,6 @@ app.post('/api/query-support', async (req, res) => {
     }
 });
 
-// 1. Make sure you import/require the correct SDK at the top of server.js
-
-// Initialize Groq with your environment variable key
-
-
 // 2. Update your chat endpoint route
 app.post('/api/chat', async (req, res) => {
     try {
