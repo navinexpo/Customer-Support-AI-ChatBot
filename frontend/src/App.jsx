@@ -101,7 +101,7 @@ function App() {
       }
       return chat;
     }));
-
+     // In Future: You can add a feature to save the bot's response to a database or local storage here.
   } catch (error) {
     console.error(error);
     const errorMessage = { 
