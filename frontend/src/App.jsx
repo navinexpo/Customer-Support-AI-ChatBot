@@ -276,6 +276,7 @@ function App() {
                   <div style={styles.pulseActiveIndicator}></div>
                   <span style={styles.headerTitle}>{currentConversation.title}</span>
                 </div>
+              // Close button to collapse the chat window
                 <button style={styles.closeBtn} onClick={() => setIsOpen(false)}>×</button>
               </div>
 
