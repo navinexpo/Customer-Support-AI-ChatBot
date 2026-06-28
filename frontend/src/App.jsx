@@ -28,7 +28,7 @@ function App() {
   const [passwordInput, setPasswordInput] = useState("");
   const [registerNameInput, setRegisterNameInput] = useState("");
   const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
-
+  // Ref for auto-scrolling chat body
   const chatEndRef = useRef(null);
 
   // Auto-scroll chat body context
