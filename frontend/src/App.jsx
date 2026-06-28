@@ -156,7 +156,7 @@ function App() {
     setRegisterNameInput("");
     setConfirmPasswordInput("");
   };
-
+   // Logout Handler: Reset user state to Guest
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserName("Guest");
