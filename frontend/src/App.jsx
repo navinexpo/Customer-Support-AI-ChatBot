@@ -109,6 +109,7 @@ function App() {
       sender: 'bot', 
       time: 'OFFLINE' 
     };
+    // Update the conversation with an error message if the fetch fails
     setConversations(prev => prev.map(chat => {
       if (chat.id === activeSessionId) {
         return { ...chat, messages: [...chat.messages, errorMessage] };
