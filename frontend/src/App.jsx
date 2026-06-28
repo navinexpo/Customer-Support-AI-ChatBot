@@ -64,7 +64,8 @@ function App() {
   if (currentConversation.messages.length <= 1) {
     updatedTitle = currentPrompt.length > 22 ? currentPrompt.substring(0, 20) + "..." : currentPrompt;
   }
-
+  
+  // Update the conversation state with the user's message and potentially a new title
   setInputMessage("");
   setLoading(true);
 
