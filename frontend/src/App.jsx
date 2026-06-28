@@ -297,6 +297,7 @@ function App() {
                     </div>
                   );
                 })}
+                // Typing indicator for bot response
                 {loading && (
                   <div style={{ ...styles.msgRow, justifyContent: 'flex-start' }}>
                     <div style={{ ...styles.bubble, background: '#f1f5f9', color: '#64748b' }}>
