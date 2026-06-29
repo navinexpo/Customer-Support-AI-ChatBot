@@ -83,7 +83,7 @@ app.post('/api/query-support', async (req, res) => {
         res.status(200).json({ 
             reply: completion.choices[0].message.content 
         });
-
+        // backend logs for debugging
     } catch (error) {
         console.error("Backend Error:", error);
         res.status(500).json({ reply: "AI service unavailable at the moment." });
