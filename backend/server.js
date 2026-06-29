@@ -106,6 +106,7 @@ app.post('/api/chat', async (req, res) => {
                 "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
                 "Content-Type": "application/json"
             },
+            // Send the user message to Groq's Llama model
             body: JSON.stringify({
             model: "llama-3.3-70b-versatile", 
                 messages: [
