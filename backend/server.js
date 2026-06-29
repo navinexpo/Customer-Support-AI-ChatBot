@@ -134,7 +134,7 @@ app.post('/api/chat', async (req, res) => {
         res.json({ response: aiResponse,
             reply: aiResponse
          });
-
+    // Catch any unexpected errors and log them for debugging
     } catch (error) {
         console.error("System Error details:", error);
         res.status(500).json({ error: "Internal Server Error", details: error.message });
