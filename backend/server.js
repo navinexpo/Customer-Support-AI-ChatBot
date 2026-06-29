@@ -143,4 +143,5 @@ app.post('/api/chat', async (req, res) => {
 
 // Only one listen call is needed using the PORT from environment variables to 5001
 const PORT = process.env.PORT || 5001;
+// port 5001 is used to avoid conflicts with React's default port 3000
 app.listen(PORT, () => console.log(`Server running smoothly on port ${PORT}`));
